@@ -1,0 +1,24 @@
+@startuml
+title Padrão Mediator - Torre de controle de aeroporto
+skinparam classAttributeIconSize 0
+class Aviao {
+  -voo: String
+  +solicitarPouso(): String
+  +solicitarDecolagem(): String
+}
+class TorreControle <<singleton>> {
+  +{static} getInstancia(): TorreControle
+  +receberPedidoPouso(voo: String): String
+  +receberPedidoDecolagem(voo: String): String
+}
+interface Setor {
+  +autorizarPouso(voo: String): String
+  +autorizarDecolagem(voo: String): String
+}
+class Pista <<singleton>> {
+  +{static} getInstancia(): Pista
+}
+Aviao --> TorreControle : comunica via
+TorreControle --> Pista : repassa
+Setor <|.. Pista
+@enduml
